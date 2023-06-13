@@ -1,0 +1,410 @@
+6. Security Breaching
+A cyberattack involves different levels of security systems. The attack has n levels and can be initiated at any level i with an initial energy reserve of k. On an ith level, the attack must breach the security system's layers[i] units of protection at a cost of layer[i] units of energy. If there is not enough energy left, the attack fails. If after breaching an ith level, the remaining energy reserve is at least layers[i], one point is awarded to the attacker.
+
+
+
+Given the arrays layers and energy, and an integer k, starting from each level i from 1 to n, find the number of points that the attacker can score.
+
+
+
+Example
+
+Given, n = 3, layers = [5, 8, 1], energy = [4, 2, 1], and k = 10,
+
+
+Start Level
+
+Attack
+
+Max. Points
+
+1
+
+Level 1: Energy Left = 10, layers = 5, Remaining Energy = 5
+
+A point is awarded here as the required energy is at least 4.
+
+Level 2: Energy Left = 5, layers = 8
+
+The attack fails as the attacker cannot breach a layer of 8 units.
+
+1
+
+2
+
+Level 2: Energy Left = 10, layers = 8, Remaining Energy = 2
+
+A point is awarded here as the required energy is at least 2.
+
+Level 3: Energy Left = 2, layers = 1, Remaining Energy = 1
+
+A point is awarded here as the required energy is at least 1.
+
+2
+
+3
+
+Level 3: Energy Left = 10, layers = 1, Remaining Energy = 9
+
+A point is awarded here as the required energy is at least 1.
+
+1
+
+
+
+Hence, the answer is [1,2,1].
+
+
+
+Function Description
+
+Complete the function getNumPoints in the editor below.
+
+
+
+getNumPoints takes the following arguments:
+
+    int layers[n]: the layers to be breached
+
+    int energy[n]: the minimum energy required to breach a layer
+
+    long int k: the initial energy
+
+
+
+Returns
+
+    int[n]: the number of points that can be collected starting from each level
+
+
+
+Constraints
+
+1 ≤ n ≤ 2 * 105
+1 ≤ layers[i] ≤ 105
+1 ≤ energy[i] ≤ 105
+1 ≤ k ≤ 2 * 105
+
+    public static List<Integer> getNumPoints(List<Integer> layers, List<Integer> energy, long k) {
+    // Write your code here
+
+    }
+
+    ------------------------------------------------------------------------------------------------------------------------------
+
+
+
+5. Minimum Time
+The students of HackerSchool are working on a science project that demonstrates the magnetic property. Given n plates and their positions (X[i], Y[i]), find the minimum amount of time to collect every plate.
+
+The plates have a magnetic power d. When a plate is collected, all plates at a distance of d units or less along its same column or row, are attracted and collected instantly.
+
+Note that this is a chain property. If plate a is attracted to plate b and plate c is attracted to plate a, then all the 3 plates are collected at the same time.
+
+Assuming any 1 plate can be chosen and collected in a second, calculate the minimum time required to collect the plates.
+
+
+
+Example
+
+n = 4, d = 1
+
+x = [0, 0, 1, 2]
+
+y = [0, 1, 0, 2]
+
+
+
+
+
+
+
+Plates 1, 2, and 3 are within d = 1 unit of distance of each other, so they are collected in one second. Plate 4 is collected in another second for a total of 2 seconds. Return 2.
+
+
+
+Function Description
+
+Complete the function getMinTime in the editor below.
+
+
+
+getMinTime has the following parameter(s):
+
+    int n: the number of plates.
+
+    int d: the magnetic power of the plates
+
+    int x[n]: x[i] is the x coordinate of the ith plate.
+
+    int y[n]: y[i] is the y coordinate of the ith plate.
+
+
+
+Returns
+
+    int: the minimum time required to collect all the plates
+
+
+
+Constraints
+
+1 ≤ n ≤ 105
+0 ≤ d ≤ 109
+0 ≤ x[i] ≤ 109
+0 ≤ y[i] ≤ 109
+
+
+
+
+    ------------------------------------------------------------------------------------------------------------------------------
+
+
+4. Server Investment
+A network security administrator must protect networks at a number of locations from cyber-attacks. Initially, the ith network has num_server[i] servers, and money[i] funds allocated for security upgrades. To upgrade a server in the ith network, it costs upgrade[i]. Selling a server adds sell[i] to available funds.
+
+
+
+Given the arrays num_servers, money, upgrade, and sell, each with n integers, determine the maximum number of servers that can be upgraded to ensure optimal network security. The result should be an array of n integers, where the ith integer represents the maximum number of upgraded servers for the ith network system.
+
+
+
+Example
+
+Given, num_servers = [4, 3], money = [8, 9], sell = [4, 2] and upgrade = [4, 5]
+
+System           	                                                   Description	Number of upgraded servers
+    1st	A server can be sold at a cost of 4 and upgraded at a cost of 4. If one server is sold, the total amount left is 8 + 4 = 12 and 3 servers will be left. Now each server can be upgraded at a cost of 4 for each	There can be 3 upgraded servers
+                 2nd	One server can be sold for a cost of 2 amounting to total money of 11 units which can be used to upgrade both of the remaining servers at a cost of 10 units	There can be 2 upgraded servers
+
+
+Hence the answer is [3, 2].
+
+
+
+Function Description
+
+Complete the getMaxUpgradedServers in the editor below.
+
+
+
+getMaxUpgradedServers has the following parameter(s):
+
+    int num_servers[n]: the number of servers in each network
+
+    int money[n]: the initial amount of money at each network location
+
+    int sell[n]: the network-specific value of selling a server
+
+    int upgrade[n]: the network-specific cost to upgrade a server
+
+
+
+Returns
+
+    int: The maximum number of upgraded servers for each network
+
+
+
+Constraints
+
+1≤ n ≤104
+1≤ num_servers[i], money[i], sell[i], upgrade[i] ≤ 104
+
+
+
+
+
+
+    ------------------------------------------------------------------------------------------------------------------------------
+
+
+3. Transaction Simplification
+Implement a prototype service to simplify a group of debt transactions.
+
+
+
+There are n people, and a list of m debts amongst them where debts[i] = [from[i], to[i], amount[i]] represents that person from[i] owes the person to[i] an amount of amount[i].
+
+
+
+Given the array debts, find the minimum number of transactions required to clear all the debts.
+
+
+
+Example:
+
+Suppose n = 3, m = 4, debts[] = [[0, 1, 20], [1, 0, 5], [1, 2, 10], [2, 0, 10]]
+
+
+
+Suppose 0 gives 1 a total amount of 5 units.
+
+from	to	amount
+0	1	20 - 5 = 15
+1	0	5
+1	2	10
+2	0	10
+
+
+Now 0 and 1s debts are simplified.
+
+from	to	amount
+0	1	10
+1	2	10
+2	0	10
+
+
+The three transactions now can cancel each other out. Only one transaction is required to clear all the debts i.e. from 0 to 1. Hence the answer is 1.
+
+
+
+Function Description
+
+Complete the function getMinTransactions in the editor below.
+
+
+
+getMinTransactions has the following parameters:
+
+    n: the number of people
+
+    debt[m][3]:  the debts
+
+
+
+Returns
+
+    int: the minimum number of transactions required
+
+
+
+Constraints
+
+2 ≤ n ≤ 9
+2 ≤ m ≤ 105
+0 ≤ debt[i][0], debt[i][1] < n
+1 ≤ debt[i][2] ≤ 109
+
+
+
+    ------------------------------------------------------------------------------------------------------------------------------
+
+
+2. Equal Price
+A shop in HackerLand contains n items where the price of the ith item is price[i].  In one operation, the price of any one item can be increased or decreased by 1.
+
+
+
+Given q queries denoted by the array query[], find the minimum number of operations required to make the price of all items equal to each query[i] (0 ≤ i < q).
+
+
+
+Note: All queries are independent of each other, i.e., the original price of items is restored after the completion of each query.
+
+
+Example:
+
+Consider n = 3, q = 4, price[] = [1, 2, 3], query[] = [3, 2, 1, 5]
+
+query[0] = 3. The number of operations required = [2, 1, 0] to make the price of all elements equal to 3. Total number of operations = 2 + 1 + 0 = 3.
+query[1] = 2, operations required = [1, 0, 1], 1 + 0 + 1 = 2
+query[2] = 1, operations required = [0, 1, 2], 0 + 1 + 2 = 3
+query[3] = 5, operations required = [4, 3, 2], 4 + 3 + 2 = 9
+
+
+The answer is [3, 2, 3, 9].
+
+
+Function Description
+
+Complete the function countMinimumOperations in the editor below.
+
+
+
+countMinimumOperations has the following parameters:
+
+    int price[n]: the original prices of each item
+
+    int query[q]: the queries
+
+
+
+Returns
+
+    long_int[q]: the answers to the queries in their order of input
+
+
+
+Constraints
+
+1 ≤ n ≤ 2 * 105
+1 ≤ price[i] ≤ 109
+1 ≤ q ≤ 2 * 105
+1 ≤ query[i] ≤ 109
+
+
+    ------------------------------------------------------------------------------------------------------------------------------
+
+
+1. Cloud Data Transfer
+A company plans to shift its infrastructure to the cloud. As a result, they will rent k computing cores per day for n days. The company is provided with m pricing plans for this duration. Each pricing plan has a l[i] and r[i] representing the days when it is available, c[i] cores available each day, and it costs p[i] to rent one core per day.
+
+
+
+The company can rent an arbitrary number of cores on each day from each available plan, ranging from 0 to c[i] cores. Given n, k, and plans as a 2d array, the function returns the minimum cost to complete the process.
+
+
+
+Example
+
+Suppose n = 5, k = 7, and plans = [ [1, 3, 5, 2], [1, 4, 5, 3], [2, 5, 10, 1] ]
+
+
+
+The optimal strategy is shown.
+
+
+
+Day	Purchase cores/plan	Cost
+1	5 from plan 1, 2 from plan 2	5*2 + 2*3 = 16
+2	7 from plan 3	7*1 = 7
+3	7 from plan 3	7*1 = 7
+4	7 from plan 3	7*1 = 7
+5	7 from plan 3	7*1 = 7
+
+
+The sum of costs is 16+7+7+7+7 = 44. Return 44.
+
+
+
+Function Description
+
+Complete the function getMinCost in the editor below.
+
+
+
+getMinCost has the following parameter(s):
+
+    int n : the number of days to rent cores
+
+    int k : the number of cores to rent each day
+
+    int plans[m][4]:  each plan[i] contains [l[i], r[i], c[i], p[i]], the start and end days, cores available, and price per core per day
+
+
+
+Returns
+
+    int: the minimum cost to complete the process
+
+
+
+Constraints
+
+1 ≤  n, m ≤ 104
+1 ≤ k ≤ 500
+1 ≤ plans[0], plans[1] ≤ n
+1 ≤ plans[2] ≤ k
+1 ≤ plans[3] ≤ 109
+It is guaranteed that for any available day there are at least k cores available.
