@@ -2,6 +2,7 @@ package com.folkdev.weather.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.folkdev.weather.constans.Constants;
 import com.folkdev.weather.dto.WeatherDto;
 import com.folkdev.weather.dto.WeatherResponse;
 import com.folkdev.weather.model.WeatherEntity;
@@ -19,7 +20,6 @@ import java.util.Optional;
 @Service
 
 public class WeatherService {
-    private static final String API_URL = "https://api.weatherstack.com/current?access_key=a8fdc1c26cd8b936e39636e8d0ae7a79&query=New%20York";
     private final WeatherRepository weatherRepository;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -32,14 +32,17 @@ public class WeatherService {
 
     public WeatherDto getWeatherByCityName(String city) {
         Optional<WeatherEntity> weatherEntityOptional = weatherRepository.findFirstByRequestedCityNameOrderByUpdateTimeDesc(city);
-        if (!weatherEntityOptional.isPresent()) {
-            return WeatherDto.convert(getWeatherFromWeatherStack(city));
-        }
-        return WeatherDto.convert(weatherEntityOptional.get());
+        return weatherEntityOptional.map(weather -> {
+                    if (weather.getUpdateTime().isBefore(LocalDateTime.now().minusMinutes(30))) {
+                        return WeatherDto.convert(getWeatherFromWeatherStack(city));
+                    }
+                    return WeatherDto.convert(weather);
+                })
+                .orElseGet(() -> WeatherDto.convert(getWeatherFromWeatherStack(city)));
     }
 
     private WeatherEntity getWeatherFromWeatherStack(String city) {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(API_URL + city, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(getWeatherStackUrl(city), String.class);
 
         try {
             WeatherResponse weatherResponse = objectMapper.readValue(responseEntity.getBody(), WeatherResponse.class);
@@ -47,6 +50,10 @@ public class WeatherService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getWeatherStackUrl(String city) {
+        return Constants.API_URL + Constants.ACCESS_KEY_PARAM + Constants.API_KEY + Constants.QUERY_KEY_PARAM+city;
     }
 
     private WeatherEntity saveWeatherEntity(String city, WeatherResponse weatherResponse) {
@@ -57,7 +64,7 @@ public class WeatherService {
                 weatherResponse.location().country(),
                 weatherResponse.current().temperature(),
                 LocalDateTime.now(),
-                LocalDateTime.parse(weatherResponse.location().localTime(), dateTimeFormatter));
+                LocalDateTime.parse(weatherResponse.location().localtime(), dateTimeFormatter));
         return weatherRepository.save(weatherEntity);
     }
 }
