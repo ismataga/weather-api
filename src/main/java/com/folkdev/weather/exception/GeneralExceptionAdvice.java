@@ -1,6 +1,7 @@
 package com.folkdev.weather.exception;
 
 
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpHeaders;
@@ -38,4 +39,8 @@ public class GeneralExceptionAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handle(ConstraintViolationException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
-}
+    @ExceptionHandler(RequestNotPermitted.class)
+    public ResponseEntity<String> handle(RequestNotPermitted exception )
+    {
+        return new ResponseEntity<>("Request limit exceeded",HttpStatus.TOO_MANY_REQUESTS);
+    }}
